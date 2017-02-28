@@ -1,0 +1,26 @@
+# Alert when any Firewall failures occur
+name: firewall
+
+index: filebeat-2017.02.10
+
+filter:
+  - term:
+      hostname: www.shaadi.com
+
+type: frequency
+num_events: 2
+timeframe:
+  minutes: 30
+
+alert:
+- email
+email:
+- jira@freecharge.atlassian.net
+alert_subject: "Issue {0} - {1} occurred at {2}"
+cc:
+- security-alerts@freecharge.com
+#cc
+alert_subject_args:
+- catdesc
+- hostname
+- "@timestamp"
